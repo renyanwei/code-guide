@@ -4,41 +4,25 @@ layout: default
 
 
 <div class="heading" id="toc">
-  <h2>Table of contents</h2>
+  <h2>目录</h2>
 </div>
 <div class="section toc">
   <div class="col">
-    <h4><a href="#html">HTML</a></h4>
+    <h4><a href="#base">基础</a></h4>
     <ul>
-      <li><a href="#html-syntax">Syntax</a></li>
-      <li><a href="#html-doctype">HTML5 doctype</a></li>
-      <li><a href="#html-lang">Language attribute</a></li>
-      <li><a href="#html-encoding">Character encoding</a></li>
-      <li><a href="#html-ie-compatibility-mode">Internet Explorer compatibility mode</a></li>
-      <li><a href="#html-style-script">CSS and JavaScript includes</a></li>
-      <li><a href="#html-practicality">Practicality over purity</a></li>
-      <li><a href="#html-attribute-order">Attribute order</a></li>
-      <li><a href="#html-boolean-attributes">Boolean attributes</a></li>
-      <li><a href="#html-reducing-markup">Reducing markup</a></li>
-      <li><a href="#html-javascript">JavaScript generated markup</a></li>
+      <li><a href="#base-md5">MD5计算</a></li>
+      <li><a href="#base-urlencrypt">URL加密/校验</a></li>
+      <li><a href="#base-pnpk">PN和PK安全机制</a></li>
+      <li><a href="#base-json">JSON序列化/反序列化</a></li>
     </ul>
   </div>
   <div class="col">
-    <h4><a href="#css">CSS</a></h4>
+    <h4><a href="#log">日志</a></h4>
     <ul>
-      <li><a href="#css-syntax">CSS syntax</a></li>
-      <li><a href="#css-declaration-order">Declaration order</a></li>
-      <li><a href="#css-import">Don't use @import</a></li>
-      <li><a href="#css-media-queries">Media query placement</a></li>
-      <li><a href="#css-prefixed-properties">Prefixed properties</a></li>
-      <li><a href="#css-single-declarations">Rules with single declarations</a></li>
-      <li><a href="#css-shorthand">Shorthand notation</a></li>
-      <li><a href="#css-nesting">Nesting in Less and Sass</a></li>
-      <li><a href="#css-operators">Operators in Less and Sass</a></li>
-      <li><a href="#css-comments">Comments</a></li>
-      <li><a href="#css-classes">Classes</a></li>
-      <li><a href="#css-selectors">Selectors</a></li>
-      <li><a href="#css-organization">Organization</a></li>
+      <li><a href="#log-memo">概述</a></li>
+      <li><a href="#log-error">错误（Error）日志</a></li>
+      <li><a href="#log-warn">警告（Warn）日志</a></li>
+      <li><a href="#log-info">信息（Info）日志</a></li>
     </ul>
   </div>
 </div>
@@ -46,166 +30,141 @@ layout: default
 
 <div class="section" id="golden-rule">
   <div class="col">
-    <h2>Golden rule</h2>
-    <p>Enforce these, or your own, agreed upon guidelines at all times. Small or large, call out what's incorrect. For additions or contributions to this Code Guide, please <a href="https://github.com/mdo/code-guide/issues/new">open an issue on GitHub</a>.</p>
+    <h2>黄金定律</h2>
+    <p>永远遵循同一套编码规范 -- 可以是这里列出的，也可以是你自己总结的。如果你发现本规范中有任何错误，一块为本规范添加或贡献内容。</p>
   </div>
   <div class="col">
     <blockquote>
-      <p>Every line of code should appear to be written by a single person, no matter the number of contributors.</p>
+      <p>不管有多少人共同参与同一项目，一定要确保每一行代码都像是同一个人编写的。</p>
     </blockquote>
   </div>
 </div>
 
 
 
-<div class="heading" id="html">
-  <h2>HTML</h2>
+<div class="heading" id="base">
+  <h2>基础</h2>
 </div>
 
-<div class="section" id="html-syntax">
+<div class="section" id="html-md5">
   <div class="col">
-    <h3>Syntax</h3>
-    <ul>
-      <li>Use soft tabs with two spaces—they're the only way to guarantee code renders the same in any environment.</li>
-      <li>Nested elements should be indented once (two spaces).</li>
-      <li>Always use double quotes, never single quotes, on attributes.</li>
-      <li>Don't include a trailing slash in self-closing elements—the <a href="http://dev.w3.org/html5/spec-author-view/syntax.html#syntax-start-tag">HTML5 spec</a> says they're optional.</li>
-      <li>Don’t omit optional closing tags (e.g. <code>&lt;/li&gt;</code> or <code>&lt;/body&gt;</code>).</li>
-    </ul>
+    <h3>MD5计算</h3>
+      <p>目前C#内置的实现MD5计算方式有很多种，方式不同编码不同结果也不相同，因此我们统一规范采用MD5CryptoServiceProvider类进行计算，此方法已经被封装到Common中的MD5类Encrypt方法中。注意：判断MD5值是否相等应该忽略大小写。将要比较的两个MD5统一转成大写或小写形式再进行判断。</p>
   </div>
   <div class="col">
-    {% highlight html %}{% include html/syntax.html %}{% endhighlight %}
-  </div>
-</div>
-
-<div class="section" id="html-doctype">
-  <div class="col">
-    <h3>HTML5 doctype</h3>
-    <p>Enforce standards mode and more consistent rendering in every browser possible with this simple doctype at the beginning of every HTML page.</p>
-  </div>
-  <div class="col">
-    {% highlight html %}{% include html/doctype.html %}{% endhighlight %}
+    {% highlight c# %}
+using Common;
+namespace Portal.Test
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine(MD5.Encrypt("original string"));
+        }
+    }
+}	
+	{% endhighlight %}
   </div>
 </div>
 
-<div class="section" id="html-lang">
+<div class="section" id="base-urlencrypt">
   <div class="col">
-    <h3>Language attribute</h3>
-    <p>From the HTML5 spec:</p>
-    <blockquote>
-      <p>Authors are encouraged to specify a lang attribute on the root html element, giving the document's language. This aids speech synthesis tools to determine what pronunciations to use, translation tools to determine what rules to use, and so forth.</p>
-    </blockquote>
-    <p>Read more about the <code>lang</code> attribute <a href="http://www.w3.org/html/wg/drafts/html/master/semantics.html#the-html-element">in the spec</a>.</p>
-    <p>Head to Sitepoint for a <a href="http://reference.sitepoint.com/html/lang-codes">list of language codes</a>.</p>
+    <h3>URL加密/校验</h3>
+    <p>在子系统、不同系统之间如果决定采用HTTP进行数据通讯时，应该对HTTP的请求方参数处理，生成唯一指纹，HTTP的接收方则应该对指纹进行校验，校验通过则表示为正常合法的请求，反之则应该进行驳回处理，目前相关方法已经封装到Common中的SafeUrlUtility类中。注意，加密、校验依赖于PN和PK机制，加密和校验过程中会读取WEB.Config设置的PN和PK，具体PN和PK机制详见相关的说明。</p>
   </div>
   <div class="col">
-    {% highlight html %}{% include html/lang.html %}{% endhighlight %}
+    {% highlight c# %}
+/*
+ *接口请求方
+ */
+static void Main(string[] args)
+{
+    //生成含有唯一指纹的安全URL,会在QueryString附加sign和pn参数
+    string safeRequestUrl = SafeUrlUtility.HashUrlCreate("http://www.httpinterface.com/api/demoapi", new
+    {
+        param1 = "str1",
+        param2 = "str2",
+        //更多参数
+    });
+    //开始请求，获取结果
+    dynamic result = ApiClient.GET(safeRequestUrl);
+    //根据result进行对应处理
+}
+
+/*
+ *接口接收方
+ */
+public ActionResult demoapi(string pn, string param1, string param2)
+{
+    //根据pn查询数据库获取到对应的pk
+    //string pk=GetPKforPN(pn);
+    //校验请求是否合法
+    bool issafe = SafeUrlUtility.HashUrlVerify(pk, Request);
+    if (issafe)
+    {
+        //请求合法，执行其他业务逻辑
+    }
+    else
+    {
+        //请求不合法，驳回
+    }
+}
+	{% endhighlight %}
   </div>
 </div>
 
-<div class="section" id="html-ie-compatibility-mode">
+<div class="section" id="base-pnpk">
   <div class="col">
-    <h3>IE compatibility mode</h3>
-    <p>Internet Explorer supports the use of a document compatibility <code>&lt;meta&gt;</code> tag to specify what version of IE the page should be rendered as. Unless circumstances require otherwise, it's most useful to instruct IE to use the latest supported mode with <strong>edge mode</strong>.</p>
-    <p>For more information, <a href="http://stackoverflow.com/questions/6771258/whats-the-difference-if-meta-http-equiv-x-ua-compatible-content-ie-edge-e">read this awesome Stack Overflow article</a>.</p>
+    <h3>PN和PK安全机制</h3>
+    <p>在进行对对系统架构进行合理的拆解和封装形成各自独立的服务时势必会面临系统之间通过HTTP进行数据的互相访问的场景，特设置PN和PK机制来解决这个问题：</p>
+	<ul>
+	<li>
+	PN：每个子系统的唯一标识，通常会在HTTP请求中明文传送，参与加密计算并附加在请求的QueryString参数中。
+	</li>
+	<li>
+	PK：每个PN对应的加密密钥，通常存储在Web.Config中，参数加密计算但不会在各个子系统之间通过HTTP传递。
+	</li>
+	</ul>
+	<p>
+	每个系统拥有唯一的PN和PK，应该存储在系统根目录Web.Config的appSettings节点。所有系统的PN和PK存储在Tiantis数据库中App_SimplyInfo表。
+	</p>
   </div>
   <div class="col">
-    {% highlight html %}{% include html/ie-compatibility-mode.html %}{% endhighlight %}
-  </div>
-</div>
-
-<div class="section" id="html-encoding">
-  <div class="col">
-    <h3>Character encoding</h3>
-    <p>Quickly and easily ensure proper rendering of your content by declaring an explicit character encoding. When doing so, you may avoid using character entities in your HTML, provided their encoding matches that of the document (generally UTF-8).</p>
-  </div>
-  <div class="col">
-    {% highlight html %}{% include html/encoding.html %}{% endhighlight %}
-  </div>
-</div>
-
-<div class="section" id="html-style-script">
-  <div class="col">
-    <h3>CSS and JavaScript includes</h3>
-    <p>Per HTML5 spec, typically there is no need to specify a <code>type</code> when including CSS and JavaScript files as <code>text/css</code> and <code>text/javascript</code> are their respective defaults.</p>
-    <h4>HTML5 spec links</h4>
-    <ul>
-      <li><a href="http://www.w3.org/TR/2011/WD-html5-20110525/semantics.html#the-link-element">Using link</a></li>
-      <li><a href="http://www.w3.org/TR/2011/WD-html5-20110525/semantics.html#the-style-element">Using style</a></li>
-      <li><a href="http://www.w3.org/TR/2011/WD-html5-20110525/scripting-1.html#the-script-element">Using script</a></li>
-    </ul>
-  </div>
-  <div class="col">
-    {% highlight html %}{% include html/style-script.html %}{% endhighlight %}
+    {% highlight xml %}
+<appSettings>
+  <!--其他配置信息-->
+  <add key="pn" value="00000213"/>
+  <add key="pk" value="3c51704a09844314a74ec5fbec7c7a34"/>
+</appSettings>
+	{% endhighlight %}
   </div>
 </div>
 
-<div class="section" id="html-practicality">
+<div class="section" id="base-json">
   <div class="col">
-    <h3>Practicality over purity</h3>
-    <p>Strive to maintain HTML standards and semantics, but not at the expense of practicality. Use the least amount of markup with the fewest intricacies whenever possible.</p>
+    <h3>JSON序列化/反序列化</h3>
+    <p>处理JSON在每个系统中用的频率非常高，不光是WEB项目，还有各种类库，都会有这方面的事情要处理，所以在Common项目中统一引用了JSON.NET，而其他项目如果需要用JSON.NET，引用Common就好了。这样整个解决方案只会有一次引用，可以避免上述问题的发生，具体JSON操作封装在JsonHelper类中的SerializeObject方法和DeserializeObject方法。</p>
+    
+  </div>
+  <div class="col">
+    {% highlight c# %}
+static void Main(string[] args)
+{
+    //JSON序列化
+    string json = Common.JsonHelper.SerializeObject(new { });
+
+    //JSON反序列化
+    dynamic obj=Common.JsonHelper.DeserializeObject(json);
+    //JSON反序列化，泛型支持
+    Model model = Common.JsonHelper.DeserializeObject<Model>(json);
+}	
+	{% endhighlight %}
   </div>
 </div>
-
-<div class="section" id="html-attribute-order">
-  <div class="col">
-    <h3>Attribute order</h3>
-    <p>HTML attributes should come in this particular order for easier reading of code.</p>
-    <ul>
-      <li><code>class</code></li>
-      <li><code>id</code>, <code>name</code></li>
-      <li><code>data-*</code></li>
-      <li><code>src</code>, <code>for</code>, <code>type</code>, <code>href</code>, <code>value</code></li>
-      <li><code>title</code>, <code>alt</code></li>
-      <li><code>role</code>, <code>aria-*</code></li>
-    </ul>
-    <p>Classes make for great reusable components, so they come first. Ids are more specific and should be used sparingly (e.g., for in-page bookmarks), so they come second.</p>
-  </div>
-  <div class="col">
-    {% highlight html %}{% include html/attribute-order.html %}{% endhighlight %}
-  </div>
-</div>
-
-<div class="section" id="html-boolean-attributes">
-  <div class="col">
-    <h3>Boolean attributes</h3>
-    <p>A boolean attribute is one that needs no declared value. XHTML required you to declare a value, but HTML5 has no such requirement.</p>
-    <p>For further reading, consult the <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/common-microsyntaxes.html#boolean-attributes">WhatWG section on boolean attributes</a>:</p>
-    <blockquote>
-      <p>The presence of a boolean attribute on an element represents the true value, and the absence of the attribute represents the false value.</p>
-    </blockquote>
-    <p>If you <em>must</em> include the attribute's value, and <strong>you don't need to</strong>, follow this WhatWG guideline:</p>
-    <blockquote>
-      <p>If the attribute is present, its value must either be the empty string or [...] the attribute's canonical name, with no leading or trailing whitespace.</p>
-    </blockquote>
-    <p><strong>In short, don't add a value.</strong></p>
-  </div>
-  <div class="col">
-    {% highlight html %}{% include html/boolean-attributes.html %}{% endhighlight %}
-  </div>
-</div>
-
-<div class="section" id="html-reducing-markup">
-  <div class="col">
-    <h3>Reducing markup</h3>
-    <p>Whenever possible, avoid superfluous parent elements when writing HTML. Many times this requires iteration and refactoring, but produces less HTML. Take the following example:</p>
-  </div>
-  <div class="col">
-    {% highlight html %}{% include html/reducing-markup.html %}{% endhighlight %}
-  </div>
-</div>
-
-<div class="section" id="html-javascript">
-  <div class="col">
-    <h3>JavaScript generated markup</h3>
-    <p>Writing markup in a JavaScript file makes the content harder to find, harder to edit, and less performant. Avoid it whenever possible.</p>
-  </div>
-</div>
-
-
 
 <div class="heading" id="css">
-  <h2>CSS</h2>
+  <h2>日志</h2>
 </div>
 
 <div class="section" id="css-syntax">
