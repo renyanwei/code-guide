@@ -25,6 +25,14 @@ layout: default
       <li><a href="#log-info">信息（Info）日志</a></li>
     </ul>
   </div>
+  <div class="col">
+    <h4><a href="#ads">广告</a></h4>
+    <ul>
+      <li><a href="#ads-install">安装</a></li>
+      <li><a href="#ads-config">配置</a></li>
+      <li><a href="#ads-use">使用</a></li>
+    </ul>
+  </div>
 </div>
 
 
@@ -49,7 +57,7 @@ layout: default
 <div class="section" id="html-md5">
   <div class="col">
     <h3>MD5计算</h3>
-      <p>目前C#内置的实现MD5计算方式有很多种，方式不同编码不同结果也不相同，因此我们统一规范采用MD5CryptoServiceProvider类进行计算，此方法已经被封装到Common中的MD5类Encrypt方法中。注意：判断MD5值是否相等应该忽略大小写。将要比较的两个MD5统一转成大写或小写形式再进行判断。</p>
+      <p>目前C#内置的实现MD5计算方式有很多种，方式不同编码不同结果也不相同，因此我们统一规范采用<code>MD5CryptoServiceProvider</code>类进行计算，此方法已经被封装到<code>Common</code>中的<code>MD5</code>类<code>Encrypt</code>方法中。注意：判断MD5值是否相等应该忽略大小写。将要比较的两个MD5统一转成大写或小写形式再进行判断。</p>
   </div>
   <div class="col">
     {% highlight c# %}
@@ -71,7 +79,7 @@ namespace Portal.Test
 <div class="section" id="base-urlencrypt">
   <div class="col">
     <h3>URL加密/校验</h3>
-    <p>在子系统、不同系统之间如果决定采用HTTP进行数据通讯时，应该对HTTP的请求方参数处理，生成唯一指纹，HTTP的接收方则应该对指纹进行校验，校验通过则表示为正常合法的请求，反之则应该进行驳回处理，目前相关方法已经封装到Common中的SafeUrlUtility类中。注意，加密、校验依赖于PN和PK机制，加密和校验过程中会读取WEB.Config设置的PN和PK，具体PN和PK机制详见相关的说明。</p>
+    <p>在子系统、不同系统之间如果决定采用HTTP进行数据通讯时，应该对HTTP的请求方参数处理，生成唯一指纹，HTTP的接收方则应该对指纹进行校验，校验通过则表示为正常合法的请求，反之则应该进行驳回处理，目前相关方法已经封装到<code>Common</code>中的<code>SafeUrlUtility</code>类中。注意，加密、校验依赖于PN和PK机制，加密和校验过程中会读取<code>WEB.Config</code>设置的<code>PN</code>和<code>PK</code>，具体PN和PK机制详见相关的说明。</p>
   </div>
   <div class="col">
     {% highlight c# %}
@@ -127,7 +135,7 @@ public ActionResult demoapi(string pn, string param1, string param2)
 	</li>
 	</ul>
 	<p>
-	每个系统拥有唯一的PN和PK，应该存储在系统根目录Web.Config的appSettings节点。所有系统的PN和PK存储在Tiantis数据库中App_SimplyInfo表。
+	每个系统拥有唯一的PN和PK，应该存储在系统根目录<code>Web.Config</code>的<code>appSettings</code>节点。所有系统的PN和PK存储在<code>Tiantis</code>数据库中<code>App_SimplyInfo</code>表。
 	</p>
   </div>
   <div class="col">
@@ -144,7 +152,7 @@ public ActionResult demoapi(string pn, string param1, string param2)
 <div class="section" id="base-json">
   <div class="col">
     <h3>JSON序列化/反序列化</h3>
-    <p>处理JSON在每个系统中用的频率非常高，不光是WEB项目，还有各种类库，都会有这方面的事情要处理，所以在Common项目中统一引用了JSON.NET，而其他项目如果需要用JSON.NET，引用Common就好了。这样整个解决方案只会有一次引用，可以避免上述问题的发生，具体JSON操作封装在JsonHelper类中的SerializeObject方法和DeserializeObject方法。</p>
+    <p>处理JSON在每个系统中用的频率非常高，不光是WEB项目，还有各种类库，都会有这方面的事情要处理，所以在<code>Common</code>项目中统一引用了<code>JSON.NET</code>，而其他项目如果需要用JSON.NET，引用Common。这样整个解决方案只会有一次引用，可以避免上述问题的发生，具体JSON操作封装在<code>JsonHelper</code>类中的<code>SerializeObject</code>方法和<code>DeserializeObject</code>方法。</p>
     
   </div>
   <div class="col">
@@ -171,7 +179,7 @@ static void Main(string[] args)
   <div class="col">
     <h3>概述</h3>
     <p>为了减少记录日志的复杂度以及统一规范日志的保存和查询，日志组件已经封装到Nuget包里。VS里下载即可</p>
-	<p class="nuget-badge"><code>Install-Package Log.SDK</code></p>
+	<p class="nuget"><code>Install-Package Log.SDK</code></p>
   </div>
   <div class="col">
     {% highlight c# %}
@@ -187,7 +195,7 @@ class Program
 <div class="section" id="log-error">
   <div class="col">
     <h3>错误（Error）日志</h3>
-    <p>错误（Error）日志仅仅在代码发生了不可预知（或忘记处理）的时候使用，一般情况下，不应该在除了Global.asax文件以外的地方使用，Error级别的日志的目的在于“检漏”，哪些异常发生了但是代码里没有被Try Catch处理，最后被Global.asax里HttpApplication类的Application_Error截获了，就用Error记录下。</p>
+    <p>错误（Error）日志仅仅在代码发生了不可预知（或忘记处理）的时候使用，一般情况下，不应该在除了Global.asax文件以外的地方使用，Error级别的日志的目的在于“检漏”，哪些异常发生了但是代码里没有被Try Catch处理，最后被Global.asax里HttpApplication类的<code>Application_Error</code>截获了，用Error记录。</p>
   </div>
   <div class="col">
     {% highlight c# %}
@@ -209,7 +217,7 @@ public class MvcApplication : System.Web.HttpApplication
 <div class="section" id="log-warn">
   <div class="col">
     <h3>警告（Warn）日志</h3>
-    <p>警告（Warn）级别的信息主要用于记录在业务实现的代码中一些可以预知并且做了一定防范，比如调用其他子系统或第三方的HTTP接口、查询数据库、或者其他复杂操作，在写代码的时候就已经知道这块将来可能会有问题并且对关键代码做了Try Catch处理。那么在Catch代码块就一定要记录日志。</p>
+    <p>警告（Warn）级别的信息主要用于记录在业务实现的代码中一些可以预知并且做了一定防范，比如调用其他子系统或第三方的HTTP接口、查询数据库、或者其他复杂操作，在写代码的时候就已经知道这块将来可能会有问题并且对关键代码做了<code>Try Catch</code>处理。那么在<code>Catch</code>代码块就一定要记录日志。</p>
   </div>
   <div class="col">
     {% highlight c# %}
@@ -254,6 +262,69 @@ static void Delete(string id)
     //删除成功
     logger.Info("数据ID:" + id + "在" + DateTime.Now + "被删除");
 }	
+	{% endhighlight %}
+  </div>
+</div>
+<div class="heading" id="ads">
+  <h2>广告</h2>
+</div>
+<div class="section" id="ads-install">
+  <div class="col">
+    <h3>安装</h3>
+    <p>广告组件已经封装到Nuget包里。VS里下载即可</p>
+	<p class="nuget"><code>Install-Package Log.SDK</code></p>
+	<p>执行上述Nuget命令后，会自动安装组件所需要的文件。组件基于<code>ASP.NET MVC3</code>，要求Net Framework版本最低为<code>4.6.2</code>。安装完成后会在项目中生成名为adm的域（area）。访问地址为：http://www.domain.com/adm。成功打开安装成功。然后项目根目录会生成一个SQL建库脚本文件<code>admserverinstall.sql</code>，在项目原有库或新建库执行建表。</p>
+  </div>
+  <div class="col">
+    
+  </div>
+</div>
+<div class="section" id="ads-config">
+  <div class="col">
+    <h3>配置</h3>
+    <p>安装组件后，<code>Web.Config</code>文件自动加入了组件的配置节点，里面需要设置广告组件的数据库访问地址以及其他信息，节点属性说明如下：</p>
+	<ul>
+		<li><code>server</code>广告系统访问地址，一般为WEB项目地址加上/adm</li>
+		<li><code>safekey</code>HTML同步密钥，在广告系统站点设置【高级】中生成</li>
+		<li><code>imagesavedir</code>广告图片保存路径</li>
+		<li><code>htmlsavedir</code>广告HTML片段保存路径</li>
+		<li><code>dbserver</code>数据库服务器地址</li>
+		<li><code>dbname</code>数据库名称</li>
+		<li><code>dbusername</code>数据库用户名</li>
+		<li><code>dbpassword</code>数据库密码</li>
+	</ul>
+  </div>
+  <div class="col">
+    {% highlight xml %}
+<admanager>
+    <setting
+      server="http://test28.hnrich.cn/adm/"
+      safekey="3llk0kuJ9!gkcPM3day4"
+      imagesavedir="~/upload"
+      htmlsavedir="~/adhtml"
+      dbserver="192.168.50.13"
+      dbname="qhw_ad"
+      dbusername="sa"
+      dbpassword="!QAZ2wsx"
+      />
+</admanager>
+	{% endhighlight %}
+  </div>
+</div>
+<div class="section" id="ads-use">
+  <div class="col">
+    <h3>使用</h3>
+    <p>日常的广告位管理、广告内容的维护都在广告系统自带的WEB界面上进行，在技术人员需要将广告片段植入到网站前台的时候，可以使用广告组件自带的SDK来进行操作。在cshtml文件中的合适位置，调用SDK的加载方法，即可。</p>
+  </div>
+  <div class="col">
+    {% highlight html %}
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@ADM.SDK.Utils.AdRender.Write("001001001"/*参数为广告位编号*/)
 	{% endhighlight %}
   </div>
 </div>
