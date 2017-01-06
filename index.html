@@ -280,7 +280,7 @@ static void Delete(string id)
     <h3>安装</h3>
     <p>广告组件已经封装到Nuget包里。VS里下载即可</p>
 	
-	<p>执行上述Nuget命令后，会自动安装组件所需要的文件。组件基于<code>ASP.NET MVC3</code>，要求Net Framework版本最低为<code>4.6.2</code>。安装完成后会在项目中生成名为adm的域（area）。访问地址为：http://www.domain.com/adm。成功打开安装成功。然后项目根目录会生成一个SQL建库脚本文件<code>admserverinstall.sql</code>，在项目原有库或新建库执行建表。</p>
+	<p>执行上述Nuget命令后，会自动安装组件所需要的文件。组件基于<code>ASP.NET MVC3</code>，要求Net Framework版本最低为<code>4.6.2</code>。安装完成后会在项目中生成名为adm的域（area）。访问地址为：<a href="javascript:;">http://www.domain.com/adm</a>。成功打开安装成功。然后项目根目录会生成一个SQL建库脚本文件<code>admserverinstall.sql</code>，在项目原有库或新建库执行建表。</p>
   </div>
   <div class="col">
     <p class="nuget"><code>Install-Package ADM.Server</code></p>
@@ -341,16 +341,16 @@ static void Delete(string id)
 <div class="section" id="task-sdk-install">
   <div class="col">
     <h3>SDK安装</h3>
-    <p>计划任务组件是为了解决业务系统中需要定时重复执行的逻辑，因为计划任务的服务端是采用Windows服务的方式单独部署，因此也可以用于系统中处理比较耗时的逻辑，相当于异步处理，可以给予用户快速的反馈和相应，把复杂的事情丢给计划任务来后台执行。</p>
+    <p>计划任务组件是为了解决业务系统中需要定时重复执行的逻辑，因为计划任务的服务端是采用<code>Windows Service</code>的方式单独部署，因此也可以用于系统中处理比较耗时的逻辑，相当于异步处理，可以给予用户快速的反馈和相应，把复杂的事情丢给计划任务来后台执行。</p>
   </div>
   <div class="col">
-    <p class="nuget"><code>Install-Package ADM.Server</code></p>
+    <p class="nuget"><code>Install-Package TaskSchedule.SDK</code></p>
   </div>
 </div>
 <div class="section" id="task-sdk-use">
   <div class="col">
     <h3>使用</h3>
-    <p>计划任务的服务端采用Windows服务的方式进行部署，利用OWIN对外开放了HTTP接口用于管理计划任务，可以采用SDK中的TaskServer类进行初始化服务端引用，PutTask方法可以将任务添加到任务池，支持立即执行、延迟执行和重复执行三种模式。注意：永远不要在回调的Action中使用Cookie和Session，肯定拿不到。</p>
+    <p>计划任务的服务端采用<code>Windows Service</code>的方式进行部署，利用<code>OWIN</code>对外开放了HTTP接口用于管理计划任务，可以采用SDK中的<code>TaskServer</code>类进行初始化服务端引用，<code>PutTask</code>方法可以将任务添加到任务池，支持立即执行、延迟执行和重复执行三种模式。注意：永远不要在回调的Action中使用<code>Cookie</code>和<code>Session</code>，肯定拿不到。</p>
   </div>
   <div class="col">
     {% highlight c# %}
