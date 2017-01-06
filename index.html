@@ -33,6 +33,13 @@ layout: default
       <li><a href="#ads-use">使用</a></li>
     </ul>
   </div>
+    <div class="col">
+    <h4><a href="#task">任务调度</a></h4>
+    <ul>
+      <li><a href="#task-sdk-install">安装</a></li>
+      <li><a href="#task-sdk-use">使用</a></li>
+    </ul>
+  </div>
 </div>
 
 
@@ -276,7 +283,7 @@ static void Delete(string id)
 	<p>执行上述Nuget命令后，会自动安装组件所需要的文件。组件基于<code>ASP.NET MVC3</code>，要求Net Framework版本最低为<code>4.6.2</code>。安装完成后会在项目中生成名为adm的域（area）。访问地址为：http://www.domain.com/adm。成功打开安装成功。然后项目根目录会生成一个SQL建库脚本文件<code>admserverinstall.sql</code>，在项目原有库或新建库执行建表。</p>
   </div>
   <div class="col">
-    <p class="nuget"><code>Install-Package Log.SDK</code></p>
+    <p class="nuget"><code>Install-Package ADM.Server</code></p>
   </div>
 </div>
 <div class="section" id="ads-config">
@@ -325,6 +332,55 @@ static void Delete(string id)
 <h2>Index</h2>
 
 @ADM.SDK.Utils.AdRender.Write("001001001"/*参数为广告位编号*/)
+	{% endhighlight %}
+  </div>
+</div>
+<div class="heading" id="task">
+  <h2>任务调度</h2>
+</div>
+<div class="section" id="task-sdk-install">
+  <div class="col">
+    <h3>SDK安装</h3>
+    <p>计划任务组件是为了解决业务系统中需要定时重复执行的逻辑，因为计划任务的服务端是采用Windows服务的方式单独部署，因此也可以用于系统中处理比较耗时的逻辑，相当于异步处理，可以给予用户快速的反馈和相应，把复杂的事情丢给计划任务来后台执行。</p>
+  </div>
+  <div class="col">
+    <p class="nuget"><code>Install-Package ADM.Server</code></p>
+  </div>
+</div>
+<div class="section" id="task-sdk-use">
+  <div class="col">
+    <h3>使用</h3>
+    <p>计划任务的服务端采用Windows服务的方式进行部署，利用OWIN对外开放了HTTP接口用于管理计划任务，可以采用SDK中的TaskServer类进行初始化服务端引用，PutTask方法可以将任务添加到任务池，支持立即执行、延迟执行和重复执行三种模式。注意：永远不要在回调的Action中使用Cookie和Session，肯定拿不到。</p>
+  </div>
+  <div class="col">
+    {% highlight c# %}
+//前台用户访问的Action
+public ActionResult Index()
+{
+    /*正常业务逻辑处理*/
+
+    //初始化任务调度器，设置服务端地址
+    TaskServer ts = new TaskServer("http://116.255.145.141:886");
+    //推送一个立即执行的任务
+    ts.PutTask("http://www.domain.com/home/backgroundtask?id=126");
+    //推送一个30分钟后执行的任务
+    ts.PutTask("http://www.domain.com/home/backgroundtask?id=126",DateTime.Now.AddMinutes(30));
+    //推送一个每月1号执行的任务
+    ts.PutTask("http://www.domain.com/home/backgroundtask?id=126", "* * * * 1/1 ? ");
+
+    return View();
+}
+
+/*************************************我是分割线*************************************/
+
+//任务调度器会执行的Action
+public ActionResult BackgroundTask(int id)
+{
+    /*正常业务逻辑处理*/
+
+    //记得最后返回Success，不然会任务调度器可能会继续调用
+    return Content(ReturnValue.Success);
+}
 	{% endhighlight %}
   </div>
 </div>
