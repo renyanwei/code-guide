@@ -90,9 +90,7 @@ namespace Portal.Test
   </div>
   <div class="col">
     {% highlight c# %}
-/*
- *接口请求方
- */
+//接口请求方
 static void Main(string[] args)
 {
     //生成含有唯一指纹的安全URL,会在QueryString附加sign和pn参数
@@ -102,21 +100,17 @@ static void Main(string[] args)
         param2 = "str2",
         //更多参数
     });
-    //开始请求，获取结果
     dynamic result = ApiClient.GET(safeRequestUrl);
     //根据result进行对应处理
 }
-
-/*
- *接口接收方
- */
+/*************************************我是分割线*************************************/
+//接口接收方
 public ActionResult demoapi(string pn, string param1, string param2)
 {
     //根据pn查询数据库获取到对应的pk
     //string pk=GetPKforPN(pn);
     //校验请求是否合法
-    bool issafe = SafeUrlUtility.HashUrlVerify(pk, Request);
-    if (issafe)
+    if (SafeUrlUtility.HashUrlVerify(pk, Request))
     {
         //请求合法，执行其他业务逻辑
     }
@@ -278,9 +272,9 @@ static void Delete(string id)
 <div class="section" id="ads-install">
   <div class="col">
     <h3>安装</h3>
-    <p>广告组件已经封装到Nuget包里。VS里下载即可</p>
+    <p>广告组件是为了解决平台网站中的碎片内容管理，如Banner广告、图文广告、友情链接以及其他的零碎的需要在网站正式上线之后动态管理的内容。组件自身支持数据模型的自定义，配合HTML模版，可以生成最终的HTML片段，插入到网站的页面中。</p>
 	
-	<p>执行上述Nuget命令后，会自动安装组件所需要的文件。组件基于<code>ASP.NET MVC3</code>，要求Net Framework版本最低为<code>4.6.2</code>。安装完成后会在项目中生成名为adm的域（area）。访问地址为：<a href="javascript:;">http://www.domain.com/adm</a>。成功打开安装成功。然后项目根目录会生成一个SQL建库脚本文件<code>admserverinstall.sql</code>，在项目原有库或新建库执行建表。</p>
+	<p>组件基于<code>ASP.NET MVC3</code>，要求Net Framework版本最低为<code>4.6.2</code>。安装完成后会在项目中生成名为adm的域（area）。访问地址为：<a href="javascript:;">http://www.domain.com/adm</a>。成功打开安装成功。然后项目根目录会生成一个SQL建库脚本文件<code>admserverinstall.sql</code>，在项目原有库或新建库执行建表。</p>
   </div>
   <div class="col">
     <p class="nuget"><code>Install-Package ADM.Server</code></p>
@@ -371,9 +365,7 @@ public ActionResult Index()
 
     return View();
 }
-
 /*************************************我是分割线*************************************/
-
 //任务调度器会执行的Action
 public ActionResult BackgroundTask(int id)
 {
