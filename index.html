@@ -36,7 +36,7 @@ layout: default
     <div class="col">
     <h4><a href="#task">任务调度</a></h4>
     <ul>
-      <li><a href="#task-sdk-install">安装</a></li>
+      <li><a href="#task-sdk-install">SDK安装</a></li>
       <li><a href="#task-sdk-use">使用</a></li>
     </ul>
   </div>
@@ -351,6 +351,7 @@ static void Delete(string id)
   <div class="col">
     <h3>使用</h3>
     <p>计划任务的服务端采用<code>Windows Service</code>的方式进行部署，利用<code>OWIN</code>对外开放了HTTP接口用于管理计划任务，可以采用SDK中的<code>TaskServer</code>类进行初始化服务端引用，<code>PutTask</code>方法可以将任务添加到任务池，支持立即执行、延迟执行和重复执行三种模式。注意：永远不要在回调的Action中使用<code>Cookie</code>和<code>Session</code>，肯定拿不到。</p>
+	<p>附：重复任务的计划表示用的是CRON表达式，CRON表达式由六个部分组成，用空格分开，这里有个地址可以在线生成：<a href="http://cron.qqe2.com/">http://cron.qqe2.com/</a></p>
   </div>
   <div class="col">
     {% highlight c# %}
