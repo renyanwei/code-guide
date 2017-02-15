@@ -176,7 +176,7 @@ static void Main(string[] args)
 <div class="section" id="base-webconfig">
   <div class="col">
     <h3>Web.config</h3>
-    <p>在Web项目中，默认有三个配置文件，分别为：<code>Web.config</code> <code>Web.Debug.config</code> <code>Web.Release.config</code>。只要使用合适的学法，就能够解决开发环境和正式环境的<code>appSetting</code>和<code>connectionStrings</code>配置不同的问题。在实际使用中<code>Web.Debug.config</code>可以不做维护，把开发环境中的appSetting和connectionStrings写到<code>Web.config</code>文件中，正式环境的配置信息写到<code>Web.Release.config</code>中，在使用Visual Studio或自动部署系统进行发布时，将会自动合并两个文件，形成正式环境适用的Web.config，核心就是利用<code>xdt:Transform</code>和<code>xdt:Locator</code>，更多这方面的内容可以访问：<a href="https://msdn.microsoft.com/zh-cn/library/dd465326(v=vs.100).aspx" target="_blank">用于 Web 应用程序项目部署的 Web.config 转换语法</a></p>
+    <p>在Web项目中，默认有三个配置文件，分别为：Web.config Web.Debug.config Web.Release.config。可以解决开发环境和正式环境的<code>appSetting</code>和<code>connectionStrings</code>配置不同的问题。在实际使用中Web.Debug.config可以不做维护，把开发环境中的appSetting和connectionStrings写到Web.config文件中，正式环境的配置信息写到Web.Release.config中，在使用Visual Studio或自动部署系统进行发布时，将会自动合并两个文件，形成正式环境适用的Web.config，核心就是利用<code>xdt:Transform</code>和<code>xdt:Locator</code>，更多这方面的内容可以访问：<a href="https://msdn.microsoft.com/zh-cn/library/dd465326(v=vs.100).aspx" target="_blank">用于 Web 应用程序项目部署的 Web.config 转换语法</a></p>
 	<p>自动部署系统强制使用<code>Release</code>进行编译，所以一定要按照此规范，不然发布到正式环境的配置文件将会使用开发环境的配置信息。</p>
     
   </div>
