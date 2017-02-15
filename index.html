@@ -14,6 +14,7 @@ layout: default
       <li><a href="#base-urlencrypt">URL加密/校验</a></li>
       <li><a href="#base-pnpk">PN和PK安全机制</a></li>
       <li><a href="#base-json">JSON序列化/反序列化</a></li>
+	  <li><a href="#base-webconfig">Web.config</a></li>
     </ul>
   </div>
   <div class="col">
@@ -171,6 +172,41 @@ static void Main(string[] args)
 	{% endhighlight %}
   </div>
 </div>
+
+<div class="section" id="base-webconfig">
+  <div class="col">
+    <h3>Web.config</h3>
+    <p>在Web项目中，默认有三个配置文件，分别为：<code>Web.config</code> <code>Web.Debug.config</code> <code>Web.Release.config</code>。只要使用合适的学法，就能够解决开发环境和正式环境的<code>appSetting</code>和<code>connectionStrings</code>配置不同的问题。在实际使用中<code>Web.Debug.config</code>可以不做维护，把开发环境中的appSetting和connectionStrings写到<code>Web.config</code>文件中，正式环境的配置信息写到<code>Web.Release.config</code>中，在使用Visual Studio或自动部署系统进行发布时，将会自动合并两个文件，形成正式环境适用的Web.config，核心就是利用<code>xdt:Transform</code>和<code>xdt:Locator</code>，更多这方面的内容可以访问：<a href="https://msdn.microsoft.com/zh-cn/library/dd465326(v=vs.100).aspx" target="_blank">用于 Web 应用程序项目部署的 Web.config 转换语法</a></p>
+	<p>自动部署系统强制使用<code>Release</code>进行编译，所以一定要按照此规范，不然发布到正式环境的配置文件将会使用开发环境的配置信息。</p>
+    
+  </div>
+  <div class="col">
+    {% highlight xml %}
+<!--web.config-->
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <appSettings>
+    <add key="key1" value="开发环境的密钥" />
+  </appSettings>
+  <connectionStrings>
+    <add name="conn1" connectionString="开发环境的数据库连接字符串"/>
+  </connectionStrings>
+</configuration>
+
+<--web.Release.config-->
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <appSettings>
+    <add key="key1" value="正式环境的密钥" xdt:Transform="SetAttributes" xdt:Locator="Match(name)"/>
+  </appSettings>
+  <connectionStrings>
+    <add name="conn1" connectionString="正式环境的数据库连接字符串" xdt:Transform="SetAttributes" xdt:Locator="Match(name)"/>
+  </connectionStrings>
+</configuration>
+	{% endhighlight %}
+  </div>
+</div>
+
 
 <div class="heading" id="log">
   <h2>日志</h2>
@@ -361,7 +397,7 @@ public ActionResult Index()
     //推送一个30分钟后执行的任务
     ts.PutTask("http://www.domain.com/home/backgroundtask?id=126",DateTime.Now.AddMinutes(30));
     //推送一个每月1号执行的任务
-    ts.PutTask("http://www.domain.com/home/backgroundtask?id=126", "* * * * 1/1 ? ");
+    ts.PutTask("http://www.domain.com/home/backgroundtask?id=126", "0 0 0 1 1/1 ? * ");
 
     return View();
 }
