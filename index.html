@@ -195,9 +195,9 @@ static void Main(string[] args)
 
 <--web.Release.config-->
 <?xml version="1.0" encoding="utf-8"?>
-<configuration>
+<configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
   <appSettings>
-    <add key="key1" value="正式环境的密钥" xdt:Transform="SetAttributes" xdt:Locator="Match(name)"/>
+    <add key="key1" value="正式环境的密钥" xdt:Transform="SetAttributes" xdt:Locator="Match(key)"/>
   </appSettings>
   <connectionStrings>
     <add name="conn1" connectionString="正式环境的数据库连接字符串" xdt:Transform="SetAttributes" xdt:Locator="Match(name)"/>
